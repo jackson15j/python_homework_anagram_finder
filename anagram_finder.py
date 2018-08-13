@@ -29,38 +29,65 @@ class AnagramFinder(object):
           found"]`.
         * calls `CLI.printer(anagram_list)`, to display.
     """
+    # TODO: add tests!!
+    def _filter_anagram_lists(self, anagram_list):
+        """Sorts and filters the nested anagram list to remove duplicates.
 
-    def filter_source(self, contents):
+        @param list anagram_list: Nested list of unsorted anagram lists.
+        @returns: `set()` of anagram lists.
+        """
+        [x.sort() for x in anagram_list]
+        return set([tuple(x) for x in anagram_list])
+
+    def _filter_source(self, contents):
+        """Filter the source content to remove punctuation and duplicate words.
+
+        @param str contents: String from a `file.read()` call.
+        @returns: `set()`.
+        """
         return set(contents.split())
 
-    def get_anagrams(self, word):
-        # TODO: Anagram logic.
+    def _get_anagrams(self, word):
+        """Return a list of anagrams for the provided word.
+
+        @todo :: Anagram logic.
+
+        @param str word: Word to find anagrams for.
+        @returns: list of anagrams strings for the provided `word`.
+        """
+        # TOOD: investigate how to pull in a dictionary to do anagram logic.
         print(word)
         if word == 'my':
             return ["banana", "jam"]
         return ["stock", "list"]
 
+    def get_anagram_lists(self, contents):
+        """Return a list of sorted anagrams without any duplicates.
+
+        @param str contents: String from a `file.read()` call.
+        @returns: `set()` of anagram lists.
+        """
+        filtered_words = self._filter_source(contents)
+
+        anagram_list = []
+        for word in filtered_words:
+            anagrams = self._get_anagrams(word)
+            anagram_list.append(anagrams)
+
+        # Filter out duplicate anagrams.
+        anagram_set = self._filter_anagram_lists(anagram_list)
+        return anagram_set
+
 
 if __name__ == '__main__':
+    # TODO: remove debug prints for logging.
     print("hello")
+    # TODO: Remove hardcoded file.
     with open("test/data/example2.txt", 'r') as infile:
         contents = infile.read()
     print(contents)
 
     anagramFinder = AnagramFinder()
-    filtered_words = anagramFinder.filter_source(contents)
-    print(filtered_words)
-
-    anagram_list = []
-    anagram_set = set()
-    for word in filtered_words:
-        anagrams = anagramFinder.get_anagrams(word)
-        print(anagrams)
-        anagrams.sort()
-        print(anagrams)
-        anagram_list.append(anagrams)
-
-    print(anagram_list)
-    # Filter out duplicate anagrams.
-    anagram_set = set([tuple(x) for x in anagram_list])
-    print(anagram_set)
+    anagram_lists = anagramFinder.get_anagram_lists(contents)
+    print(anagram_lists)
+    # TODO: print each list appropriately to stdout.
