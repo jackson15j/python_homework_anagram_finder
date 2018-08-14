@@ -90,13 +90,12 @@ class AnagramFinder(object):
         # Note: Testing a different english dictionary uses uppercase keys,
         # hence the casing changes for lookups and return words.
         upper_word = word.upper()
-        # Got several bugs: with my lookups:
-        # FIXME: if lookups need to respect repeated chars.
-        # FIXME: remove all results with chars not found in `word`.
         # FIXME: settle on a dictionary.
         anagrams = [
             x.lower() for x in self.en_dict_json.keys() if len(word) == len(x)
-            and all(char in x for char in list(upper_word))]
+            and all(char in x for char in list(upper_word))
+            and all(x.count(char) == upper_word.count(char) for char in list(upper_word))
+        ]
 
         pluralised_anagrams = self._get_webster_pluralised_anagrams(word)
         if pluralised_anagrams:
