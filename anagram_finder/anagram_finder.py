@@ -45,7 +45,7 @@ class AnagramFinder(object):
     # Note: Had previously used: https://github.com/dwyl/english-words/, but
     # removed it due to too many words that would not be considered standard.
     # Note: This Webster dictionary's keys/values are upper case.
-    default_en_dict = ("dictionary/graph.json")
+    default_en_dict = ("../dictionary/graph.json")
 
     def __init__(self):
         with open(self.default_en_dict, 'r') as f:
