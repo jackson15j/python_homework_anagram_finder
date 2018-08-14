@@ -1,3 +1,4 @@
+from orderedset import OrderedSet
 from string import punctuation
 import json
 
@@ -58,8 +59,13 @@ class AnagramFinder(object):
         @param list anagram_list: Nested list of unsorted anagram lists.
         @returns: `set()` of anagram lists.
         """
+        # Sort each sub-anagram list, then tuple, so that I can do an
+        # OrderedSet on them (OrderedSet since a requirement is to return
+        # anagrams in file read order).
         [x.sort() for x in anagram_list]
-        return set([tuple(x) for x in anagram_list])
+        ret_val = [tuple(x) for x in anagram_list]
+        ret_val = list(OrderedSet(ret_val))
+        return ret_val
 
     def _filter_source(self, contents):
         """Filter the source content to remove punctuation and duplicate words.
@@ -72,8 +78,8 @@ class AnagramFinder(object):
         # Remove punctuation from the string.
         translator = str.maketrans('', '', punctuation)
         ret_val = ret_val.translate(translator)
-        ret_val = set(ret_val.split())
-        return ret_val
+        ret_val = OrderedSet(ret_val.split())
+        return list(ret_val)
 
     def _get_anagrams(self, word):
         """Return a list of anagrams for the provided word.
@@ -116,11 +122,11 @@ class AnagramFinder(object):
                 anagram_list.append(anagrams)
 
         if not anagram_list:
-            return {("no anagrams found")}
+            return [("no anagrams found")]
 
         # Filter out duplicate anagrams.
-        anagram_set = self._filter_anagram_lists(anagram_list)
-        return anagram_set
+        filtered_anagram_list = self._filter_anagram_lists(anagram_list)
+        return filtered_anagram_list
 
 
 if __name__ == '__main__':

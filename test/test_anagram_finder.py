@@ -25,12 +25,12 @@ def anagram_examples(request):
 
 # FIXME: Why does the Webster dictionary not have "eat"??
 @pytest.fixture(params=[
-    ("the quick brown fox", {("no anagrams found")}),
-    ("eat my tea", {("ate", "eat", "tea")}),
-    ("do or door no no", {("on", "no")}),
-    ("pots stop pots spot stop", {("post", "pots", "spot", "stop")}),
+    ("the quick brown fox", [("no anagrams found")]),
+    ("eat my tea", [("ate", "eat", "tea")]),
+    ("do or door no no", [("no", "on")]),
+    ("pots stop pots spot stop", [("post", "pots", "spot", "stop")]),
     ("on pots no stop eat\nate pots spot stop tea",
-     {("on", "no"), ("post", "pots", "spot", "stop"), ("ate", "eat", "tea")})
+     [("no", "on"), ("post", "pots", "spot", "stop"), ("ate", "eat", "tea")])
 ])
 def anagram_examples_fixed(request):
     return request.param
@@ -58,9 +58,9 @@ class TestAnagramFinder(object):
     def test_filter_source(self, anagramFinder):
         """Positively verify `_filter_source()`."""
         a = "a fake source with punctuation. And new\nlines\ninside it. fake."
-        exp = {
+        exp = [
             "a", "fake", "source", "with", "punctuation", "and", "new",
-            "lines", "inside", "it"}
+            "lines", "inside", "it"]
 
         result = anagramFinder._filter_source(a)
         assert exp == result
@@ -71,7 +71,7 @@ class TestAnagramFinder(object):
         b = ['b', 'c', 'a']
         c = ['d', 'e']
         d = [a, a, b, b, c, c]
-        exp = {tuple(a), tuple(c)}
+        exp = [tuple(a), tuple(c)]
 
         result = anagramFinder._filter_anagram_lists(d)
         assert exp == result
