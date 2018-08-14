@@ -24,6 +24,7 @@ def anagram_examples(request):
 
 
 # FIXME: Why does the Webster dictionary not have "eat"??
+# FIXME: Webster doesn't have `TOPS` as a plural of `TOP` in it's graph.json.
 @pytest.fixture(params=[
     ("the quick brown fox", [("no anagrams found")]),
     ("eat my tea", [("ate", "eat", "tea")]),
@@ -79,12 +80,7 @@ class TestAnagramFinder(object):
     def test_get_anagrams(self, anagramFinder):
         """Positively verify `_get_anagrams()`."""
         a = "stop"
-        # FIXME: https://github.com/adambom/dictionary, doesn't have pluralised
-        # words as keys. These can be found in the value list of
-        # `graph.json`. Might have to do something crazy like "if word contains
-        # `s`, do a look up of `len(word) -1` and filter for words based of
-        # remaining characters **and** `s` is the final character.
-        exp = ["stop", "pots", "tops", "post"]
+        exp = ["stop", "pots", "spot", "post"]
 
         result = anagramFinder._get_anagrams(a)
         # instead of doing something like:
