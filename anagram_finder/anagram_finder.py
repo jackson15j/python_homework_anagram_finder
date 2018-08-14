@@ -191,17 +191,3 @@ class AnagramFinder(object):
         # Filter out duplicate anagrams.
         filtered_anagram_list = self._filter_anagram_lists(anagram_list)
         return filtered_anagram_list
-
-
-if __name__ == '__main__':
-    # TODO: remove debug prints for logging.
-    print("hello")
-    # TODO: Remove hardcoded file.
-    with open("test/data/example2.txt", 'r') as infile:
-        contents = infile.read()
-    print(contents)
-
-    anagramFinder = AnagramFinder()
-    anagram_lists = anagramFinder.get_anagram_lists(contents)
-    print(anagram_lists)
-    # TODO: print each list appropriately to stdout.
