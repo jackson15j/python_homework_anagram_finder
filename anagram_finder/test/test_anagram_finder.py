@@ -1,7 +1,9 @@
 from .. import anagram_finder
+from anagram_finder.utils.base_logging import BaseLogging
 import pytest
 import logging
 
+BaseLogging().default_config()
 log = logging.getLogger(__name__)
 
 

@@ -1,21 +1,17 @@
 from client import cli
-
+from utils.base_logging import BaseLogging
 import logging
+
+log = logging.getLogger(__name__)
 
 
 def main():
     """Main entrypoint for the Anagram Finder application. Uses the CLI client.
     """
-    logging.basicConfig(
-        filename='anagram_finder.log',
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-m-%d %H:%M:%S',
-        level=logging.DEBUG
-    )
-
-    logging.debug("Calling Anagram finder from CLI instance...")
+    BaseLogging().default_config()
+    log.debug("Calling Anagram finder from CLI instance...")
     cli.input()
-    logging.debug("Application exit.")
+    log.debug("Application exit.")
 
 
 if __name__ == '__main__':
