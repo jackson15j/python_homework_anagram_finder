@@ -32,13 +32,42 @@ the quick brown fox | no anagrams found
 eat my tea | eat eat
 do or door no no | no anagrams found
 pots stop pots spot stop | pots stop spot
-on pots no stop eat |
-ate pots spot stop tea | on no
- | pots stop spot
- | eat ate tea
+on pots no stop eat\nate pots spot stop tea | on no\npots stop spot\neat ate tea
 
 Solution
 ========
+
+---
+
+Edit: Zero Hour Requirement Interpretation Realisation
+------------------------------------------------------
+
+**Edit: Interpreted this following line differently just before submission
+after a final re-read:**
+
+> You are not given a dictionary of anagrams as input. Think of the input file
+> as a self-contained collection of words, in which you are looking for anagram
+> sets.
+
+My interpretation was: _"I need to implement a dictionary myself and then get
+anagram sets for all of the words within the input file against my chosen
+dictionary."_
+
+Instead I'm now reading it as: _"Use the input file as your dictionary to
+create anagram sets from."_
+
+Bad assumption on my part due to my initial interpretation. This negates a lot
+of my remarks below this point and my solution (which is for a more involved /
+unwanted feature rich problem).
+
+If I was more aware at the potential for two divergent interpretations, It
+would have been one of my questions for clarification. Shall submit my current
+solution for marking and check if it is acceptable to submit a changed piece of
+work.
+
+**End Edit**
+
+---
 
 How to Run
 ----------
