@@ -94,6 +94,14 @@ class TestAnagramFinder(object):
         result.sort()
         assert exp == result
 
+    def test_get_anagrams_returns_none(self, anagramFinder):
+        """Verify `_get_anagrams()` returns None if no anagrams are found."""
+        a = "fox"
+        exp = None
+
+        result = anagramFinder._get_anagrams(a)
+        assert exp == result
+
     def test_get_anagram_lists(self, anagramFinder, anagram_examples_fixed):
         """Positively verify `_get_anagram_lists()`."""
         print(anagram_examples_fixed)

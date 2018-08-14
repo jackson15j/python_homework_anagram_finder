@@ -79,7 +79,7 @@ class AnagramFinder(object):
         """Return a list of anagrams for the provided word.
 
         @param str word: Word to find anagrams for.
-        @returns: list of anagrams strings for the provided `word`.
+        @returns: list of anagrams strings for the provided `word` or `None`.
         """
         # Note: Testing a different english dictionary uses uppercase keys,
         # hence the casing changes for lookups and return words.
@@ -93,7 +93,7 @@ class AnagramFinder(object):
             and all(char in x for char in list(upper_word))]
 
         if len(filtered_en_dict) == 1:
-            return ["no anagrams found"]
+            return None
         if len(filtered_en_dict) == 0:
             # FIXME: pick an appropriate exception.
             raise ValueError(
@@ -112,7 +112,11 @@ class AnagramFinder(object):
         anagram_list = []
         for word in filtered_words:
             anagrams = self._get_anagrams(word)
-            anagram_list.append(anagrams)
+            if anagrams:
+                anagram_list.append(anagrams)
+
+        if not anagram_list:
+            return {("no anagrams found")}
 
         # Filter out duplicate anagrams.
         anagram_set = self._filter_anagram_lists(anagram_list)
