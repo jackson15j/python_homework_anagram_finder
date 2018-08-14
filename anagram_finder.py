@@ -34,20 +34,18 @@ class AnagramFinder(object):
           found"]`.
         * calls `CLI.printer(anagram_list)`, to display.
     """
-    # FIXME: move external dictionary into this project!
-    # FIXME: this dictionary from: https://github.com/dwyl/english-words/ has
-    # too many words that would not be considered standard. eg.
-    # "stop":
-    # * returns: ['opts', 'post', 'pots', 'spot', 'stop', 'tops']
-    # * instead of: ['pots', 'stop', 'tops']
+    # Using: an American English Webster dictionary from:
+    # https://github.com/adambom/dictionary, as a git submodule for offline
+    # lookups.
     #
-    # or: `the`
-    # * returns: ['eth', 'het', 'the']
-    # * instead of: ['the']
-    # default_en_dict = (
-    #     "/home/craig/github_forks/english-words/words_dictionary.json")
-    default_en_dict = (
-        "/home/craig/github_forks/dictionary/graph.json")
+    # FIXME: A quick google doesn't show any GB english dictionaries in JSON
+    # format. May have to install a platform dictionary (eg. Aspell, Hunspell)
+    # or add a restclient/web scraper to get from an online resource.
+    #
+    # Note: Had previously used: https://github.com/dwyl/english-words/, but
+    # removed it due to too many words that would not be considered standard.
+    # Note: This Webster dictionary's keys/values are upper case.
+    default_en_dict = ("dictionary/graph.json")
 
     def __init__(self):
         with open(self.default_en_dict, 'r') as f:
@@ -126,7 +124,7 @@ class AnagramFinder(object):
 
         Solutions:
 
-        * Naievely add an `s` to the end of all reduced anagrams.
+        * Naively add an `s` to the end of all reduced anagrams.
         * Lookup each reduced anagram and check Websters graph values for a
           pluralisation.
 
