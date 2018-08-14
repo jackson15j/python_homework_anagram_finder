@@ -101,7 +101,7 @@ class AnagramFinder(object):
         if pluralised_anagrams:
             anagrams.extend(pluralised_anagrams)
 
-        webster_hacks = self._get_webster_missing_eat_hack(word)
+        webster_hacks = self._get_webster_missing_words_hack(word)
         if webster_hacks:
             anagrams.extend(webster_hacks)
 
@@ -157,15 +157,21 @@ class AnagramFinder(object):
                 return pluralised_anagrams
         return
 
-    def _get_webster_missing_eat_hack(self, word):
+    def _get_webster_missing_words_hack(self, word):
         """Hack to work around the the Webster dictionary from:
-        https://github.com/adambom/dictionary, not having "eat" in it.
+        https://github.com/adambom/dictionary, not having the following words:
 
-        @param str word: Word to check if it should return "eat" as an anagram.
-        @returns: `['eat']` or `None`.
+        * "EAT"
+        * "DOOR"
+
+        @param str word: Word to check if it should return a missing word as an
+                anagram.
+        @returns: A single item list with the missing word or `None`.
         """
         if word in ['ate', 'eat', 'tea']:
             return ['eat']
+        if word in ['door', 'odor']:
+            return ['door']
 
     def get_anagram_lists(self, contents):
         """Return a list of sorted anagrams without any duplicates.
