@@ -39,7 +39,7 @@ def anagram_examples(request):
 # FIXME: Webster is an English US dictionary. Find an English GB dictionary so
 # that I can remove the US anagram ["door", "odor"].
 @pytest.fixture(params=[
-    ("the quick brown fox", [("no anagrams found")]),
+    ("the quick brown fox", [("no anagrams found",)]),
     ("eat my tea", [("ate", "eat", "tea")]),
     ("do or door no no", [("do", "od"), ("door", "odor"), ("no", "on")]),
     ("pots stop pots spot stop", [("post", "pots", "spot", "stop")]),

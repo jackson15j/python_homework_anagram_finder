@@ -189,7 +189,7 @@ class AnagramFinder(object):
                 anagram_list.append(anagrams)
 
         if not anagram_list:
-            return [("no anagrams found")]
+            return [("no anagrams found", )]
 
         # Filter out duplicate anagrams.
         filtered_anagram_list = self._filter_anagram_lists(anagram_list)
