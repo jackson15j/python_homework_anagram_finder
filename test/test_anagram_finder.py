@@ -23,6 +23,20 @@ def anagram_examples(request):
     return request.param
 
 
+# FIXME: Why does the Webster dictionary not have "eat"??
+@pytest.fixture(params=[
+    ("the quick brown fox", {("no anagrams found")}),
+    ("eat my tea", {("ate", "eat", "tea")}),
+    ("do or door no no", {("on", "no")}),
+    ("pots stop pots spot stop", {("post", "pots", "spot", "stop")}),
+    ("on pots no stop eat\nate pots spot stop tea",
+     {("on", "no"), ("post", "pots", "spot", "stop"), ("ate", "eat", "tea")})
+])
+def anagram_examples_fixed(request):
+    return request.param
+
+
+# FIXME: the example provided is not correct in all cases. eg.
 @pytest.fixture(params=[
     ("the quick brown fox", "no anagrams found"),
     ("eat my tea", "eat tea"),
@@ -65,7 +79,12 @@ class TestAnagramFinder(object):
     def test_get_anagrams(self, anagramFinder):
         """Positively verify `_get_anagrams()`."""
         a = "stop"
-        exp = ["stop", "pots", "tops"]
+        # FIXME: https://github.com/adambom/dictionary, doesn't have pluralised
+        # words as keys. These can be found in the value list of
+        # `graph.json`. Might have to do something crazy like "if word contains
+        # `s`, do a look up of `len(word) -1` and filter for words based of
+        # remaining characters **and** `s` is the final character.
+        exp = ["stop", "pots", "tops", "post"]
 
         result = anagramFinder._get_anagrams(a)
         # instead of doing something like:
@@ -75,9 +94,10 @@ class TestAnagramFinder(object):
         result.sort()
         assert exp == result
 
-    def test_get_anagram_lists(self, anagramFinder, anagram_examples):
+    def test_get_anagram_lists(self, anagramFinder, anagram_examples_fixed):
         """Positively verify `_get_anagram_lists()`."""
-        content, exp = anagram_examples
+        print(anagram_examples_fixed)
+        content, exp = anagram_examples_fixed
 
         result = anagramFinder.get_anagram_lists(content)
         assert exp == result
