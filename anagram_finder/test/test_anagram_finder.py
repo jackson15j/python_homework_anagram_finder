@@ -50,21 +50,6 @@ def anagram_examples_fixed(request):
     return request.param
 
 
-# FIXME: the example provided is not correct in all cases. eg.
-@pytest.fixture(params=[
-    ("the quick brown fox", "no anagrams found"),
-    ("eat my tea", "eat tea"),
-    ("do or door no no", "no anagrams found"),
-    ("pots stop pots spot stop", "pots stop spot"),
-    ("on pots no stop eat\nate pots spot stop tea",
-     "on no\npots stop spot\neat ate tea")
-])
-def anagram_examples_stdout(request):
-    # TODO: move to the integration test when I need to check my stdout
-    # printer.
-    return request.param
-
-
 @pytest.mark.usefixtures("anagramFinder")
 class TestAnagramFinder(object):
     """Unittests for the AnagramFinder class."""
