@@ -1,5 +1,8 @@
 from .. import anagram_finder
 import pytest
+import logging
+
+log = logging.getLogger(__name__)
 
 
 @pytest.fixture()
@@ -108,7 +111,7 @@ class TestAnagramFinder(object):
 
     def test_get_anagram_lists(self, anagramFinder, anagram_examples_fixed):
         """Positively verify `_get_anagram_lists()`."""
-        print(anagram_examples_fixed)
+        log.debug(anagram_examples_fixed)
         content, exp = anagram_examples_fixed
 
         result = anagramFinder.get_anagram_lists(content)

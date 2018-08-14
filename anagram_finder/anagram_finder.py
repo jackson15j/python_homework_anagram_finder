@@ -1,6 +1,9 @@
 from orderedset import OrderedSet
 from string import punctuation
 import json
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class AnagramFinder(object):
@@ -103,7 +106,7 @@ class AnagramFinder(object):
         if webster_hacks:
             anagrams.extend(webster_hacks)
 
-        print(anagrams)
+        log.debug(anagrams)
 
         if len(anagrams) == 1:
             return None

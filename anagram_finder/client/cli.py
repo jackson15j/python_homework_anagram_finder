@@ -1,6 +1,9 @@
 from anagram_finder import AnagramFinder
 
 import click
+import logging
+
+log = logging.getLogger(__name__)
 
 
 @click.command()
@@ -10,9 +13,10 @@ def input(filename):
     with open(filename, 'r') as infile:
         f = infile.read()
 
+    log.debug("Filename: %r, Content: %r", filename, f)
     anagramFinder = AnagramFinder()
     anagram_lists = anagramFinder.get_anagram_lists(f)
-    print(anagram_lists)
+    log.debug(anagram_lists)
     printer(anagram_lists)
 
 
