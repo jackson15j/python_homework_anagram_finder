@@ -1,4 +1,4 @@
-from .. import anagram_finder
+from anagram_finder import anagram_finder
 from anagram_finder.utils.base_logging import BaseLogging
 import pytest
 import logging
