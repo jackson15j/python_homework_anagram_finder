@@ -1,4 +1,5 @@
 from string import punctuation
+import json
 
 
 class AnagramFinder(object):
@@ -32,7 +33,23 @@ class AnagramFinder(object):
           found"]`.
         * calls `CLI.printer(anagram_list)`, to display.
     """
-    # TODO: add tests!!
+    # FIXME: move external dictionary into this project!
+    # FIXME: this dictionary from: https://github.com/dwyl/english-words/ has
+    # too many words that would not be considered standard. eg.
+    # "stop":
+    # * returns: ['opts', 'post', 'pots', 'spot', 'stop', 'tops']
+    # * instead of: ['pots', 'stop', 'tops']
+    #
+    # or: `the`
+    # * returns: ['eth', 'het', 'the']
+    # * instead of: ['the']
+    default_en_dict = (
+        "/home/craig/github_forks/english-words/words_dictionary.json")
+
+    def __init__(self):
+        with open(self.default_en_dict, 'r') as f:
+            self.en_dict_json = json.load(f)
+
     def _filter_anagram_lists(self, anagram_list):
         """Sorts and filters the nested anagram list to remove duplicates.
 
@@ -59,16 +76,21 @@ class AnagramFinder(object):
     def _get_anagrams(self, word):
         """Return a list of anagrams for the provided word.
 
-        @todo :: Anagram logic.
-
         @param str word: Word to find anagrams for.
         @returns: list of anagrams strings for the provided `word`.
         """
-        # TOOD: investigate how to pull in a dictionary to do anagram logic.
-        print(word)
-        if word == 'my':
-            return ["banana", "jam"]
-        return ["stock", "list"]
+        filtered_en_dict = [
+            x for x in self.en_dict_json.keys() if len(word) == len(x) and
+            all(char in x for char in list(word))]
+
+        if len(filtered_en_dict) == 1:
+            return ["no anagrams found"]
+        if len(filtered_en_dict) == 0:
+            # FIXME: pick an appropriate exception.
+            raise ValueError(
+                "%r, is not in the dictionary: %r" % (
+                    word, self.default_en_dict))
+        return filtered_en_dict
 
     def get_anagram_lists(self, contents):
         """Return a list of sorted anagrams without any duplicates.
