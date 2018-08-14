@@ -25,10 +25,16 @@ def anagram_examples(request):
 
 # Note: Why does the Webster dictionary not have "eat"??
 # FIXME: Webster doesn't have `TOPS` as a plural of `TOP` in it's graph.json.
+# Note: Apparently: 'OD', is a word in the Webster dictionary:
+# > 'An alleged force or natural power, supposed, by Reichenbach andothers, to
+# > produce the phenomena of mesmerism, and to be developed byvarious agencies,
+# > as by magnets, heat, light, chemical or vitalaction, etc.; -- called also
+# > odyle or the odylic force. [Archaic]That od force of German Reichenbach
+# > Which still, from female fingertips, burnt blue. Mrs. Browning.'
 @pytest.fixture(params=[
     ("the quick brown fox", [("no anagrams found")]),
     ("eat my tea", [("ate", "eat", "tea")]),
-    ("do or door no no", [("no", "on")]),
+    ("do or door no no", [("do", "od"), ("no", "on")]),
     ("pots stop pots spot stop", [("post", "pots", "spot", "stop")]),
     ("on pots no stop eat\nate pots spot stop tea",
      [("no", "on"), ("post", "pots", "spot", "stop"), ("ate", "eat", "tea")])
