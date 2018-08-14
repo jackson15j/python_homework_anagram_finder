@@ -8,11 +8,14 @@ def anagramFinder():
     return anagram_finder.AnagramFinder()
 
 
+# FIXME: the example provided is not correct in all cases. eg.
+# * "eat my tea" should return: "eat ate tea" instead of "eat tea".
+# * "do or door no no" should return: "no on" instead of "no anagrams found"
 @pytest.fixture(params=[
-    ("the quick brown fox", {"no anagrams found", }),
-    ("eat my tea", {"eat", "eat"}),
-    ("do or door no no", {"no anagrams found", }),
-    ("pots stop pots spot stop", {"pots", "stop", "spot"}),
+    ("the quick brown fox", {("no anagrams found")}),
+    ("eat my tea", {("eat", "tea")}),
+    ("do or door no no", {("no anagrams found")}),
+    ("pots stop pots spot stop", {("pots", "stop", "spot")}),
     ("on pots no stop eat\nate pots spot stop tea",
      {("on", "no"), ("pots", "stop", "spot"), ("eat", "ate" "tea")})
 ])
@@ -22,7 +25,7 @@ def anagram_examples(request):
 
 @pytest.fixture(params=[
     ("the quick brown fox", "no anagrams found"),
-    ("eat my tea", "eat eat"),
+    ("eat my tea", "eat tea"),
     ("do or door no no", "no anagrams found"),
     ("pots stop pots spot stop", "pots stop spot"),
     ("on pots no stop eat\nate pots spot stop tea",

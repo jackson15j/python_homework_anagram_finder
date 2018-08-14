@@ -43,8 +43,10 @@ class AnagramFinder(object):
     # or: `the`
     # * returns: ['eth', 'het', 'the']
     # * instead of: ['the']
+    # default_en_dict = (
+    #     "/home/craig/github_forks/english-words/words_dictionary.json")
     default_en_dict = (
-        "/home/craig/github_forks/english-words/words_dictionary.json")
+        "/home/craig/github_forks/dictionary/dictionary.json")
 
     def __init__(self):
         with open(self.default_en_dict, 'r') as f:
@@ -79,9 +81,12 @@ class AnagramFinder(object):
         @param str word: Word to find anagrams for.
         @returns: list of anagrams strings for the provided `word`.
         """
+        # Note: Testing a different english dictionary uses uppercase keys,
+        # hence the casing changes for lookups and return words.
+        upper_word = word.upper()
         filtered_en_dict = [
-            x for x in self.en_dict_json.keys() if len(word) == len(x) and
-            all(char in x for char in list(word))]
+            x.lower() for x in self.en_dict_json.keys() if len(word) == len(x)
+            and all(char in x for char in list(upper_word))]
 
         if len(filtered_en_dict) == 1:
             return ["no anagrams found"]
