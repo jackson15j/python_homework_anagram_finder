@@ -23,7 +23,7 @@ def anagram_examples(request):
     return request.param
 
 
-# FIXME: Why does the Webster dictionary not have "eat"??
+# Note: Why does the Webster dictionary not have "eat"??
 # FIXME: Webster doesn't have `TOPS` as a plural of `TOP` in it's graph.json.
 @pytest.fixture(params=[
     ("the quick brown fox", [("no anagrams found")]),

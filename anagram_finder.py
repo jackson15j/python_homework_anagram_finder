@@ -101,6 +101,11 @@ class AnagramFinder(object):
         pluralised_anagrams = self._get_webster_pluralised_anagrams(word)
         if pluralised_anagrams:
             anagrams.extend(pluralised_anagrams)
+
+        webster_hacks = self._get_webster_missing_eat_hack(word)
+        if webster_hacks:
+            anagrams.extend(webster_hacks)
+
         print(anagrams)
 
         if len(anagrams) == 1:
@@ -113,7 +118,7 @@ class AnagramFinder(object):
         return anagrams
 
     def _get_webster_pluralised_anagrams(self, word):
-        """The Webster dictionary from: https://github.com/adambom/dictionary
+        """The Webster dictionary from: https://github.com/adambom/dictionary,
         does not have plurals as keys. We can solve this in two ways after
         doing the following initial setup:
 
@@ -153,11 +158,21 @@ class AnagramFinder(object):
                 return pluralised_anagrams
         return
 
+    def _get_webster_missing_eat_hack(self, word):
+        """Hack to work around the the Webster dictionary from:
+        https://github.com/adambom/dictionary, not having "eat" in it.
+
+        @param str word: Word to check if it should return "eat" as an anagram.
+        @returns: `['eat']` or `None`.
+        """
+        if word in ['ate', 'eat', 'tea']:
+            return ['eat']
+
     def get_anagram_lists(self, contents):
         """Return a list of sorted anagrams without any duplicates.
 
         @param str contents: String from a `file.read()` call.
-        @returns: `set()` of anagram lists.
+        @returns: list of anagram tuples.
         """
         filtered_words = self._filter_source(contents)
 
