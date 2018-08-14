@@ -1,3 +1,6 @@
+from string import punctuation
+
+
 class AnagramFinder(object):
     """
     Anagram Finder.
@@ -45,7 +48,13 @@ class AnagramFinder(object):
         @param str contents: String from a `file.read()` call.
         @returns: `set()`.
         """
-        return set(contents.split())
+        # Downcase to remove duplicates due to capitalisation.
+        ret_val = contents.lower()
+        # Remove punctuation from the string.
+        translator = str.maketrans('', '', punctuation)
+        ret_val = ret_val.translate(translator)
+        ret_val = set(ret_val.split())
+        return ret_val
 
     def _get_anagrams(self, word):
         """Return a list of anagrams for the provided word.
