@@ -5,12 +5,12 @@ name = "pypi"
 
 [packages]
 click = "*"
-"flake8" = "*"
-ipython = "*"
 pytest = "*"
 orderedset = "*"
 
 [dev-packages]
+"flake8" = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.7"

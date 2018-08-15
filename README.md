@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.com/jackson15j/python_homework_anagram_finder.svg?branch=master)](https://travis-ci.com/jackson15j/python_homework_anagram_finder)
+
 Homework: Anagram Finder
 ========================
 
@@ -205,7 +208,6 @@ Future Plans
 * Update Client-side CLI so that it runs in a separate process and uses the
   backends REST API.
     * _Potentially_ add other Client-side UI's (WebUI, emacs/vim...).
-* Add project to an external CI, such as [Travis] or [Jenkins].
 * First time using [pytest] and [pipenv]:
     * [pytest]'s fixtures are fairly powerful, like an easier to use version of
 	  C#'s [xUnit] Inline/Member data annotations. For speed (and consistency
@@ -228,7 +230,5 @@ Future Plans
 [UK_English_wordlist.zip]: http://www.bckelk.ukfsn.org/words/wlist.zip
 [Wikipedia: Trie]: https://en.wikipedia.org/wiki/Trie
 
-[Travis]: https://travis-ci.com
-[Jenkins]: https://jenkins.io
 [xUnit]: https://xunit.github.io
 [unittest]: https://docs.python.org/3/library/unittest.html
