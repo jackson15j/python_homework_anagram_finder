@@ -208,6 +208,12 @@ Future Plans
             anagram list. (eg. using a Trie to look up `pots`, which also
             returns `post, pots, spot, stop`.
 		  * Refining the search algorithm done on a flat dictionary.
+* Refactor backend `AnagramFinder()` so that there is a `dictionaries/`
+  folder. Add an interface so that each dictionary implementation exposes
+  `get_anagrams(word)` and then move out the dictionary specific implementation
+  out of `AnagramFinder()`.
+    * Make it Client-side or application-side configurable for which dictionary
+      to use.
 * Update Client-side CLI so that it runs in a separate process and uses the
   backends REST API.
     * _Potentially_ add other Client-side UI's (WebUI, emacs/vim...).
