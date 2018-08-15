@@ -1,7 +1,8 @@
 language: python
 python:
-  - "3.5"
-  - "3.6"
+  # FIXME: 3.7-dev requires the virtualenv env variable to run, but that breaks
+  # 3.5, 3.6 installs.
+  # See: https://github.com/pypa/pipenv/issues/1050
   - "3.7-dev"
 
 env:
@@ -9,7 +10,7 @@ env:
 
 install:
   - pip install pipenv
-  - pipenv install
+  - pipenv install --dev
 
 script:
   - cd anagram_finder/
