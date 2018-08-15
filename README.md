@@ -126,6 +126,9 @@ asked on this homework task:
 * Should the solution be designed from the point of view of a standalone piece
   of work (that is not touched when completed) or with the expectation that
   additional work could be done in the future?
+* Suggestion: I would work with the Product Owner to improve the terminology of
+  the requirements to remove assumptions. eg. the use of declarative words like
+  "MUST", "MUST NOT", "SHOULD", "MAY", etc as per: [RFC: 2119].
 
 ### Assumptions:
 
@@ -216,6 +219,8 @@ Future Plans
 	* [pipenv] seems good for local development to quickly spin up a consistent
       environment. Can see it being useful in CI/CD situations.
 
+
+[RFC: 2119]: http://www.ietf.org/rfc/rfc2119
 
 [pipenv]: https://docs.pipenv.org
 [pytest]: https://docs.pytest.org/en/latest/index.html
