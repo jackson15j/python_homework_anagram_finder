@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7-dev"
+
+env:
+  - PIPENV_IGNORE_VIRTUALENVS=1  # Required by 3.7-dev job.
+
+install:
+  - pip install pipenv
+  - pipenv install
+
+script:
+  - cd anagram_finder/
+  - pipenv run pytest -vv
