@@ -1,4 +1,4 @@
-from anagram_finder import anagram_finder
+from anagram_finder.anagram_core import AnagramFinder
 from anagram_finder.utils.base_logging import BaseLogging
 import pytest
 import logging
@@ -10,7 +10,7 @@ log = logging.getLogger(__name__)
 @pytest.fixture()
 def anagramFinder():
     """Generic setup of an `AnagramFinder` instance."""
-    return anagram_finder.AnagramFinder()
+    return AnagramFinder()
 
 
 # FIXME: the example provided is not correct in all cases. eg.

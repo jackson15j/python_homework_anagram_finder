@@ -1,4 +1,7 @@
 from anagram_finder.utils.base_logging import BaseLogging
+import anagram_finder
+
+from os import path
 import pytest
 import subprocess
 import logging
@@ -8,11 +11,11 @@ log = logging.getLogger(__name__)
 
 
 @pytest.fixture(params=[
-    ("test/data/example1.txt", b"no anagrams found\n"),
-    ("test/data/example2.txt", b"ate eat tea\n"),
-    ("test/data/example3.txt", b"do od\ndoor odor\nno on\n"),
-    ("test/data/example4.txt", b"post pots spot stop\n"),
-    ("test/data/example5.txt", b"no on\npost pots spot stop\nate eat tea\n")
+    ("../tests/data/example1.txt", b"no anagrams found\n"),
+    ("../tests/data/example2.txt", b"ate eat tea\n"),
+    ("../tests/data/example3.txt", b"do od\ndoor odor\nno on\n"),
+    ("../tests/data/example4.txt", b"post pots spot stop\n"),
+    ("../tests/data/example5.txt", b"no on\npost pots spot stop\nate eat tea\n")
 ])
 def anagram_examples_stdout(request):
     return request.param
@@ -21,11 +24,13 @@ def anagram_examples_stdout(request):
 class TestMain(object):
     """Integration test for the `main.py` entrypoint."""
 
+    base_module_path = path.dirname(anagram_finder.__file__)
+
     def test_main_missing_args(self):
         """Verifies that `main.py` with no args returns usage."""
         cmd = subprocess.Popen(
             ["pipenv", "run", "python", "main.py"],
-            cwd="../anagram_finder/",
+            cwd=self.base_module_path,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
 
@@ -39,7 +44,7 @@ class TestMain(object):
         filepath, exp = anagram_examples_stdout
         cmd = subprocess.Popen(
             ["pipenv", "run", "python", "main.py", filepath],
-            cwd="../anagram_finder/",
+            cwd=self.base_module_path,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
 
