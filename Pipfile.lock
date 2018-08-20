@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "767d856865e7dfd87d082cc28c74cef3c21dad1249233ec2d33d8c52ead7f949"
+            "sha256": "aa1e2db10b5c2a85c0b73722146a4f894ed86168e55dfcc18aa55ca08aedbe6a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -90,6 +90,10 @@
         }
     },
     "develop": {
+        "anagram-finder": {
+            "editable": true,
+            "path": "."
+        },
         "backcall": {
             "hashes": [
                 "sha256:38ecd85be2c1e78f77fd91700c76e14667dc21e2713b63876c0eb901196e01e4",

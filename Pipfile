@@ -12,6 +12,7 @@ anagram-finder = {editable = true, path = "."}
 [dev-packages]
 "flake8" = "*"
 ipython = "*"
+anagram-finder = {editable = true, path = "."}
 
 [requires]
 python_version = "3.7"
