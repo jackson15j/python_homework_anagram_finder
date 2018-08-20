@@ -1,4 +1,4 @@
-from dictionaries.en_us_webster import EnUsWebster
+from anagram_finder.dictionaries.en_us_webster import EnUsWebster
 
 from orderedset import OrderedSet
 from string import punctuation

@@ -1,5 +1,5 @@
-from client import cli
-from utils.base_logging import BaseLogging
+from anagram_finder.client import cli
+from anagram_finder.utils.base_logging import BaseLogging
 import logging
 
 log = logging.getLogger(__name__)

@@ -1,4 +1,4 @@
-from anagram_finder import AnagramFinder
+from anagram_finder.anagram_core import AnagramFinder
 
 import click
 import logging
