@@ -89,9 +89,10 @@ pipenv install
 pipenv run python main.py </path/to/file.txt>
 ```
 
-* From: `anagram_finder/`, run [pytest]'s via:
+* From: project root, run [pytest]'s via:
 
 ```bash
+pipenv install -e .  # install package locally
 pipenv run pytest
 ```
 
