@@ -20,7 +20,6 @@ class SourceFile(IAnagramLangDict):
         @param str source_str: String representation of the source file.
         @returns: list of anagrams strings for the provided `word` or `None`.
         """
-        # TODO: add testing.
         lower_word = word.lower()
         source_list = source_str.lower().split()
         anagrams = [
@@ -36,4 +35,5 @@ class SourceFile(IAnagramLangDict):
             # FIXME: pick an appropriate exception.
             raise ValueError(
                 "%r, is not in the dictionary: %r" % (word, source_str))
+        # TODO: testing highlights that dictionary should remove duplicates1
         return anagrams
