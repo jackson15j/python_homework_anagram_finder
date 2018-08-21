@@ -1,5 +1,6 @@
 from anagram_finder.dictionaries.ianagram_lang_dict import IAnagramLangDict
 
+from orderedset import OrderedSet
 import logging
 
 log = logging.getLogger(__name__)
@@ -29,6 +30,9 @@ class SourceFile(IAnagramLangDict):
         ]
         log.debug(anagrams)
 
+        if anagrams:
+            # Note: filtering here, in case `source_str` is not filtered.
+            anagrams = list(OrderedSet(anagrams))
         if len(anagrams) == 1:
             return None
         if len(anagrams) == 0:

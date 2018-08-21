@@ -1,5 +1,6 @@
 from anagram_finder.dictionaries.source_file import SourceFile
 from anagram_finder.utils.base_logging import BaseLogging
+
 import pytest
 import logging
 
@@ -13,10 +14,8 @@ def anagram_dict():
     return SourceFile()
 
 
-# FIXME: the example provided is not correct in all cases. eg.
-# * "eat my tea" should return: "eat ate tea" instead of "eat tea".
-# * "do or door no no" should return: "no on" instead of "no anagrams found"
 @pytest.fixture(params=[
+    # word, source_str, expected_result.
     ("fox", "the quick brown fox", None),
     ("eat", "eat my tea", ["eat", "tea"]),
     ("no", "do or door no no", None),
@@ -39,8 +38,4 @@ class TestSourceFile(object):
         word, content, exp = anagram_examples
 
         result = anagram_dict.get_anagrams(word, content)
-        if exp:
-            exp.sort()
-        if result:
-            result.sort()
         assert exp == result
