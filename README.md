@@ -32,45 +32,13 @@ Expectation
 INPUT | OUPUT
 ------|-------
 the quick brown fox | no anagrams found
-eat my tea | eat eat
+eat my tea | eat tea
 do or door no no | no anagrams found
 pots stop pots spot stop | pots stop spot
 on pots no stop eat\nate pots spot stop tea | on no\npots stop spot\neat ate tea
 
 Solution
 ========
-
----
-
-Edit: Zero Hour Requirement Interpretation Realisation
-------------------------------------------------------
-
-**Edit: Interpreted this following line differently just before submission
-after a final re-read:**
-
-> You are not given a dictionary of anagrams as input. Think of the input file
-> as a self-contained collection of words, in which you are looking for anagram
-> sets.
-
-My interpretation was: _"I need to implement a dictionary myself and then get
-anagram sets for all of the words within the input file against my chosen
-dictionary."_
-
-Instead I'm now reading it as: _"Use the input file as your dictionary to
-create anagram sets from."_
-
-Bad assumption on my part due to my initial interpretation. This negates a lot
-of my remarks below this point and my solution (which is for a more involved /
-unwanted feature rich problem).
-
-If I was more aware at the potential for two divergent interpretations, It
-would have been one of my questions for clarification. Shall submit my current
-solution for marking and check if it is acceptable to submit a changed piece of
-work.
-
-**End Edit**
-
----
 
 How to Run
 ----------
@@ -79,14 +47,15 @@ How to Run
 
 ```bash
 pip install pipenv
-cd anagram_finder/
 pipenv install
 ```
 
 * From: `anagram_finder/`, run Anagram Finder application via:
 
 ```bash
-pipenv run python main.py </path/to/file.txt>
+pipenv run python main.py [--dictionary=<anagram_dictionary>] </path/to/file.txt>
+# example for anagram finding from source file:
+pipenv run python main-py --dictionary=source-file ../tests/data/example5.txt
 ```
 
 * From: project root, run [pytest]'s via:
@@ -96,65 +65,23 @@ pipenv install -e .  # install package locally
 pipenv run pytest
 ```
 
+State at Point of Homework Submission
+-------------------------------------
 
-Questions for Product Owner
----------------------------
-
-Here are the list of questions, with assumptions/reasoning, that I would have
-asked on this homework task:
-
-* Should anagrams be done locally or use an external online service?
-* Examples are given in English. Assuming English for anagram look ups?
-* Homework from a British company that does majority of business with the
-  USA and then UK/Australia. Should the spellings be GB English or US English?
-* There are inconsistencies in the anagrams listed in the examples. Are these
-  explicit mistakes to incite questions or genuine mistakes?
-     * `eat my tea`, expects: `eat tea`, but instead there should be: `ate eat
-       tea`.
-     * `do or door no no`, expects: `no anagrams found`, but instead there
-       should be: `no on`, for all English dictionaries. Webster US English
-       also lists: `do od`, and: `odor door`, as valid anagrams.
-	 * `pots stop pots spot stop`, expects: `pots stop spot`, but instead there
-       should be: `post pots spot stop`
-* Is a single blocking script an acceptable solution, or should it be an
-  asynchronous anagram finding service (which exposes an API) that multiple
-  Client UI's can connect to?
-* Client-side request to response time is not stated. Is there a maximum
-  threshold?
-* Algorithm complexity is not stated. Is there a preferred complexity for the
-  anagram finder solution? And if there is, is it mandatory even if a poorly
-  optimised solution is still within Client-side time thresholds above?
-* Should the solution be designed from the point of view of a standalone piece
-  of work (that is not touched when completed) or with the expectation that
-  additional work could be done in the future?
-* Suggestion: I would work with the Product Owner to improve the terminology of
-  the requirements to remove assumptions. eg. the use of declarative words like
-  "MUST", "MUST NOT", "SHOULD", "MAY", etc as per: [RFC: 2119].
-
-### Assumptions:
-
-* Anagram results in English.
-* Anagram finding done from a local dictionary.
-* Inconsistencies in the examples provided can be ignored if dictionary source
-  provides valid _additional_ anagrams.
-* US English is _acceptable_ as a solution (due to above note on business
-  priorities) if a suitable GB English dictionary can not be found.
-* Un-requested Enhancement: parse out punctuation - on assumption that source
-  files may have punctuation.
-* Un-requested Enhancement: lower case source to avoid potential duplication -
-  on assumption that source files may have a mixture of casing.
-
-Current State
--------------
+**Submitted this homework piece at tag [2018-08-15_a31a8d9_homework_submitted],
+View that tag for the original state, including assumptions & PO questions.**
 
 * Backend, synchronous `AnagramFinder()` class that exposes a single getter for
   accepting a string and returning a nested list of anagrams or `no anagrams
   found`.
     * This class has some unittests.
-	* Hard-coded to use [Github: Webster's Dictionary] (US English) (Does have
-      an uppercase JSON representation as well as a graph representation) (Only
-      found out it was US English late in testing due to anagram candidates
-      after a bug fix (`door`, `odor`)).
+	* Enum definition on creation to specify the source anagram
+      dictionary. Current dictionaries are:
+	    * [Github: Webster's Dictionary] (US English) (Does have an uppercase
+		  JSON representation as well as a graph representation) (Only found
+		  out it was US English late in testing due to anagram candidates after
+		  a bug fix (`door`, `odor`)).
+		* Source File (was the original intention of the homework piece).
 	* Functional anagram finding but not optimised greatly (Reduces dictionary
       to targets that are the same length as the source word. Second reduction
       to targets that contain source words' characters. Final reduction to the
@@ -163,6 +90,8 @@ Current State
   handles the file reading into a string as input to the `AnagramFinder()`
   getter as well as manipulating the getter output into the appropriate form to
   display on stdout.
+    * CLI can define the anagram dictionary via the optional `--dictionary`
+      option.
 * Entrypoint in `main.py` which is hard coded to call the Client-side CLI.
     * Integration tests to verify the Client-side CLI with real example files.
 
@@ -195,11 +124,6 @@ Future Plans
       cross-platform worries over location/availability.
 * Update the backend `AnagramFinder()` to be an asynchronous process that
   exposes a REST API, so that it can handle multiple clients.
-    * Also allow dictionary to be configured or User provided. The latter is
-      harder, since there is not a great deal of standardisation from my
-      current investigations (txt, JSON (differing schema's), CSV, REST), as
-      well as quality in dictionaries (to much garbage vs. missing expected
-      words vs. handling of pluralisation).
 	* Optimise the dictionary to improve searching. Most dictionaries are
       either flat text (word per line), CSV or JSON. _Potentially_ changing the
       structure could improve look ups. Although a cursory glance shows that
@@ -209,12 +133,6 @@ Future Plans
             anagram list. (eg. using a Trie to look up `pots`, which also
             returns `post, pots, spot, stop`.
 		  * Refining the search algorithm done on a flat dictionary.
-* Refactor backend `AnagramFinder()` so that there is a `dictionaries/`
-  folder. Add an interface so that each dictionary implementation exposes
-  `get_anagrams(word)` and then move out the dictionary specific implementation
-  out of `AnagramFinder()`.
-    * Make it Client-side or application-side configurable for which dictionary
-      to use.
 * Update Client-side CLI so that it runs in a separate process and uses the
   backends REST API.
     * _Potentially_ add other Client-side UI's (WebUI, emacs/vim...).
@@ -226,6 +144,8 @@ Future Plans
 	* [pipenv] seems good for local development to quickly spin up a consistent
       environment. Can see it being useful in CI/CD situations.
 
+
+[2018-08-15_a31a8d9_homework_submitted]: https://github.com/jackson15j/python_homework_anagram_finder/tree/2018-08-15_a31a8d9_homework_submitted
 
 [RFC: 2119]: http://www.ietf.org/rfc/rfc2119
 
