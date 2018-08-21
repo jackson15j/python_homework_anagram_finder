@@ -1,3 +1,5 @@
+from anagram_finder.dictionaries.ianagram_lang_dict import IAnagramLangDict
+
 from os import path
 import json
 import logging
@@ -5,7 +7,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class EnUsWebster(object):
+class EnUsWebster(IAnagramLangDict):
     """
     Anagram finding class centred on the US English Webster dictionary from:
     https://github.com/adambom/dictionary, as a git submodule for offline
@@ -24,7 +26,6 @@ class EnUsWebster(object):
         @param str word: Word to find anagrams for.
         @returns: list of anagrams strings for the provided `word` or `None`.
         """
-        # TODO: make a dictionary interface.
         # Note: Testing a different english dictionary uses uppercase keys,
         # hence the casing changes for lookups and return words.
         upper_word = word.upper()
