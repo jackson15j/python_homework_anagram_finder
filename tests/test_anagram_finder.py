@@ -54,27 +54,6 @@ def anagram_examples_fixed(request):
 class TestAnagramFinder(object):
     """Unittests for the AnagramFinder class."""
 
-    def test_filter_source(self, anagramFinder):
-        """Positively verify `_filter_source()`."""
-        a = "a fake source with punctuation. And new\nlines\ninside it. fake."
-        exp = [
-            "a", "fake", "source", "with", "punctuation", "and", "new",
-            "lines", "inside", "it"]
-
-        result = anagramFinder._filter_source(a)
-        assert exp == result
-
-    def test_filter_anagram_lists(self, anagramFinder):
-        """Positively verify `_filter_anagram_lists()`."""
-        a = ['a', 'b', 'c']
-        b = ['b', 'c', 'a']
-        c = ['d', 'e']
-        d = [a, a, b, b, c, c]
-        exp = [tuple(a), tuple(c)]
-
-        result = anagramFinder._filter_anagram_lists(d)
-        assert exp == result
-
     def test_get_anagram_lists(self, anagramFinder, anagram_examples_fixed):
         """Positively verify `_get_anagram_lists()`."""
         log.debug(anagram_examples_fixed)
