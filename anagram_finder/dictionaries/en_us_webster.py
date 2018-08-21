@@ -20,16 +20,16 @@ class EnUsWebster(IAnagramLangDict):
         with open(self.dict_full_path, 'r') as f:
             self.en_dict_json = json.load(f)
 
-    def get_anagrams(self, word):
+    def get_anagrams(self, word, source_str=None):
         """Return a list of anagrams for the provided word.
 
         @param str word: Word to find anagrams for.
+        @param str source_str: Unused.
         @returns: list of anagrams strings for the provided `word` or `None`.
         """
         # Note: Testing a different english dictionary uses uppercase keys,
         # hence the casing changes for lookups and return words.
         upper_word = word.upper()
-        # FIXME: settle on a dictionary.
         anagrams = [
             x.lower() for x in self.en_dict_json.keys() if len(word) == len(x)
             and all(char in x for char in list(upper_word))
