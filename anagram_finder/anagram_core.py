@@ -56,11 +56,6 @@ class AnagramFinder(object):
         ret_val = OrderedSet(ret_val.split())
         return list(ret_val)
 
-    def _get_anagrams(self, word):
-        # FIXME: half-step refactor, whilst I'm pushing functionality out to a
-        # new class. Need to fix unittests before I can remove this function.
-        return self.anagram_lang_dict.get_anagrams(word)
-
     def get_anagram_lists(self, contents):
         """Return a list of sorted anagrams without any duplicates.
 
@@ -71,7 +66,7 @@ class AnagramFinder(object):
 
         anagram_list = []
         for word in filtered_words:
-            anagrams = self._get_anagrams(word)
+            anagrams = self.anagram_lang_dict.get_anagrams(word)
             if anagrams:
                 anagram_list.append(anagrams)
 

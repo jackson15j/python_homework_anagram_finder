@@ -75,27 +75,6 @@ class TestAnagramFinder(object):
         result = anagramFinder._filter_anagram_lists(d)
         assert exp == result
 
-    def test_get_anagrams(self, anagramFinder):
-        """Positively verify `_get_anagrams()`."""
-        a = "stop"
-        exp = ["stop", "pots", "spot", "post"]
-
-        result = anagramFinder._get_anagrams(a)
-        # instead of doing something like:
-        # `assert bool(x in exp for x in result)` or asserts within the for
-        # loop, I'm sorting the lists to maintain debug output.
-        exp.sort()
-        result.sort()
-        assert exp == result
-
-    def test_get_anagrams_returns_none(self, anagramFinder):
-        """Verify `_get_anagrams()` returns None if no anagrams are found."""
-        a = "fox"
-        exp = None
-
-        result = anagramFinder._get_anagrams(a)
-        assert exp == result
-
     def test_get_anagram_lists(self, anagramFinder, anagram_examples_fixed):
         """Positively verify `_get_anagram_lists()`."""
         log.debug(anagram_examples_fixed)

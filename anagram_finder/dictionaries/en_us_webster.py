@@ -24,6 +24,7 @@ class EnUsWebster(object):
         @param str word: Word to find anagrams for.
         @returns: list of anagrams strings for the provided `word` or `None`.
         """
+        # TODO: make a dictionary interface.
         # Note: Testing a different english dictionary uses uppercase keys,
         # hence the casing changes for lookups and return words.
         upper_word = word.upper()
