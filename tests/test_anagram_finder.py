@@ -1,5 +1,7 @@
 from anagram_finder.anagram_core import AnagramFinder
+from anagram_finder.dictionaries.ianagram_lang_dict import AnagramLangDictEnum
 from anagram_finder.utils.base_logging import BaseLogging
+
 import pytest
 import logging
 
@@ -13,18 +15,16 @@ def anagramFinder():
     return AnagramFinder()
 
 
-# FIXME: the example provided is not correct in all cases. eg.
-# * "eat my tea" should return: "eat ate tea" instead of "eat tea".
-# * "do or door no no" should return: "no on" instead of "no anagrams found"
 @pytest.fixture(params=[
-    ("the quick brown fox", {("no anagrams found")}),
-    ("eat my tea", {("eat", "tea")}),
-    ("do or door no no", {("no anagrams found")}),
-    ("pots stop pots spot stop", {("pots", "stop", "spot")}),
+    # source_str, exp_result.
+    ("the quick brown fox", [("no anagrams found", )]),
+    ("eat my tea", [("eat", "tea")]),
+    ("do or door no no", [("no anagrams found", )]),
+    ("pots stop pots spot stop", [("pots", "spot", "stop")]),
     ("on pots no stop eat\nate pots spot stop tea",
-     {("on", "no"), ("pots", "stop", "spot"), ("eat", "ate" "tea")})
+     [("no", "on"), ("pots", "spot", "stop"), ("ate", "eat", "tea")])
 ])
-def anagram_examples(request):
+def anagram_examples_source_file_dictionary(request):
     return request.param
 
 
@@ -39,6 +39,7 @@ def anagram_examples(request):
 # FIXME: Webster is an English US dictionary. Find an English GB dictionary so
 # that I can remove the US anagram ["door", "odor"].
 @pytest.fixture(params=[
+    # source_str, exp_result.
     ("the quick brown fox", [("no anagrams found",)]),
     ("eat my tea", [("ate", "eat", "tea")]),
     ("do or door no no", [("do", "od"), ("door", "odor"), ("no", "on")]),
@@ -46,7 +47,7 @@ def anagram_examples(request):
     ("on pots no stop eat\nate pots spot stop tea",
      [("no", "on"), ("post", "pots", "spot", "stop"), ("ate", "eat", "tea")])
 ])
-def anagram_examples_fixed(request):
+def anagram_examples_en_us_webster_dictionary(request):
     return request.param
 
 
@@ -54,10 +55,21 @@ def anagram_examples_fixed(request):
 class TestAnagramFinder(object):
     """Unittests for the AnagramFinder class."""
 
-    def test_get_anagram_lists(self, anagramFinder, anagram_examples_fixed):
+    def test_get_anagram_lists(
+            self, anagramFinder, anagram_examples_en_us_webster_dictionary):
         """Positively verify `_get_anagram_lists()`."""
-        log.debug(anagram_examples_fixed)
-        content, exp = anagram_examples_fixed
+        log.debug(anagram_examples_en_us_webster_dictionary)
+        content, exp = anagram_examples_en_us_webster_dictionary
+
+        result = anagramFinder.get_anagram_lists(content)
+        assert exp == result
+
+    def test_get_anagram_lists_source_file_anagram_dict(
+            self, anagram_examples_source_file_dictionary):
+        """Positively verify `_get_anagram_lists()`."""
+        log.debug(anagram_examples_source_file_dictionary)
+        content, exp = anagram_examples_source_file_dictionary
+        anagramFinder = AnagramFinder(AnagramLangDictEnum.SOURCE_FILE)
 
         result = anagramFinder.get_anagram_lists(content)
         assert exp == result
