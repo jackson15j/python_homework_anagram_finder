@@ -1,5 +1,24 @@
 from abc import ABC
 from abc import abstractmethod
+from enum import auto
+from enum import Enum
+
+
+class AnagramLangDictEnum(Enum):
+    """Enum for Anagram dictionary selection."""
+    # Using: an American English Webster dictionary from:
+    # https://github.com/adambom/dictionary, as a git submodule for offline
+    # lookups.
+    #
+    # FIXME: A quick google doesn't show any GB english dictionaries in JSON
+    # format. May have to install a platform dictionary (eg. Aspell, Hunspell)
+    # or add a restclient/web scraper to get from an online resource.
+    #
+    # Note: Had previously used: https://github.com/dwyl/english-words/, but
+    # removed it due to too many words that would not be considered standard.
+    # Note: This Webster dictionary's keys/values are upper case.
+    EN_US_WEBSTER = auto()
+    SOURCE_FILE = auto()
 
 
 class IAnagramLangDict(ABC):
