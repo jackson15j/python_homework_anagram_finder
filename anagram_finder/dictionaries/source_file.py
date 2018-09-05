@@ -33,11 +33,6 @@ class SourceFile(IAnagramLangDict):
         if anagrams:
             # Note: filtering here, in case `source_str` is not filtered.
             anagrams = list(OrderedSet(anagrams))
-        if len(anagrams) == 1:
+        if len(anagrams) <= 1:
             return None
-        if len(anagrams) == 0:
-            # FIXME: pick an appropriate exception.
-            raise ValueError(
-                "%r, is not in the dictionary: %r" % (word, source_str))
-        # TODO: testing highlights that dictionary should remove duplicates1
         return anagrams
