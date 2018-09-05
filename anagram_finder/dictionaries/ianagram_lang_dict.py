@@ -20,6 +20,9 @@ class AnagramLangDictEnum(Enum):
     EN_US_WEBSTER = auto()
     SOURCE_FILE = auto()
 
+    def __str__(self):
+        return str(self.name)
+
 
 class IAnagramLangDict(ABC):
     """Interface for Anagram finding dictionary classes. Up to the
