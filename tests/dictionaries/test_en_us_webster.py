@@ -37,3 +37,12 @@ class TestEnUsWebster(object):
 
         result = anagram_dict.get_anagrams(a)
         assert exp == result
+
+    def test_get_anagrams_excepts_on_word_not_in_dictionary(self, anagram_dict):
+        """Verify `_get_anagrams()` returns an exception if the supplied word
+        is not in the dictionary. Possibly it should return None in the future
+        to mimic no anagrams found."""
+        a = "shorts"
+
+        with pytest.raises(ValueError):
+            _ = anagram_dict.get_anagrams(a)

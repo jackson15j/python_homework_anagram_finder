@@ -52,7 +52,7 @@ class EnUsWebster(IAnagramLangDict):
             # FIXME: pick an appropriate exception.
             raise ValueError(
                 "%r, is not in the dictionary: %r" % (
-                    word, self.default_en_dict))
+                    word, self.dict_full_path))
         return anagrams
 
     def _get_webster_pluralised_anagrams(self, word):
