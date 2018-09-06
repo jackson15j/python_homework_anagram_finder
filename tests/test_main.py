@@ -45,11 +45,9 @@ def anagramFinderProcess(request):
         stderr=subprocess.PIPE)
     sleep(5)
 
-    def teardown():
-        cmd_backend.kill()
+    yield
 
-    request.addfinalizer(teardown)
-    return cmd_backend
+    cmd_backend.kill()
 
 
 class TestMain(object):
