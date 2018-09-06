@@ -53,9 +53,12 @@ pipenv install
 * From: `anagram_finder/`, run Anagram Finder application via:
 
 ```bash
-pipenv run python main.py [--dictionary=<anagram_dictionary>] </path/to/file.txt>
+# run up the AnagramFinder server process:
+pipenv run python main.py
+# run the CLI Client:
+pipenv run python client/cli.py [--dictionary=<anagram_dictionary>] </path/to/file.txt>
 # example for anagram finding from source file:
-pipenv run python main-py --dictionary=source-file ../tests/data/example5.txt
+pipenv run python client/cli.py --dictionary=source-file ../tests/data/example5.txt
 ```
 
 * From: project root, run [pytest]'s via:
@@ -71,31 +74,28 @@ State at Point of Homework Submission
 **Submitted this homework piece at tag [2018-08-15_a31a8d9_homework_submitted],
 View that tag for the original state, including assumptions & PO questions.**
 
-* Backend, synchronous `AnagramFinder()` class that exposes a single getter for
-  accepting a string and returning a nested list of anagrams or `no anagrams
-  found`.
-    * This class has some unittests.
-	* Enum definition on creation to specify the source anagram
-      dictionary. Current dictionaries are:
-	    * [Github: Webster's Dictionary] (US English) (Does have an uppercase
-		  JSON representation as well as a graph representation) (Only found
-		  out it was US English late in testing due to anagram candidates after
-		  a bug fix (`door`, `odor`)).
-		* Source File (was the original intention of the homework piece).
-	* Functional anagram finding but not optimised greatly (Reduces dictionary
-      to targets that are the same length as the source word. Second reduction
-      to targets that contain source words' characters. Final reduction to the
-      correct count of source words' characters).
-* Client-side CLI that creates an instance of `AnagramFinder()`. This UI
-  handles the file reading into a string as input to the `AnagramFinder()`
-  getter as well as manipulating the getter output into the appropriate form to
-  display on stdout.
+Current State
+-------------
+
+### Server
+
+Synchronous AnagramFinder process (`main.py`) which exposes a REST
+API. Currently hardcoded to: `http://127.0.0.1:5000/`
+
+* `/` - GET Hello World print.
+* `/anagrams` - GET List of dictionary sub-paths.
+* `/anagrams/en-us-webster/<string>` - GET anagrams from provided string
+  against the EN US Webster dictionary.
+* `/anagrams/source-file/<string>` - GET anagrams from provided string
+  against the provided string.
+
+### Clients
+
+Clients built on the Server API are located in the `clients/` folder.
+
+* `cli.py` - CLI client (as specified in the original homework piece).
     * CLI can define the anagram dictionary via the optional `--dictionary`
       option.
-* Entrypoint in `main.py` which is hard coded to call the Client-side CLI.
-    * Integration tests to verify the Client-side CLI with real example files.
-
-
 
 Future Plans
 ------------
@@ -133,9 +133,6 @@ Future Plans
             anagram list. (eg. using a Trie to look up `pots`, which also
             returns `post, pots, spot, stop`.
 		  * Refining the search algorithm done on a flat dictionary.
-* Update Client-side CLI so that it runs in a separate process and uses the
-  backends REST API.
-    * _Potentially_ add other Client-side UI's (WebUI, emacs/vim...).
 * First time using [pytest] and [pipenv]:
     * [pytest]'s fixtures are fairly powerful, like an easier to use version of
 	  C#'s [xUnit] Inline/Member data annotations. For speed (and consistency
