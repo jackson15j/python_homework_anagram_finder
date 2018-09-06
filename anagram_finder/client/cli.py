@@ -1,10 +1,6 @@
-from anagram_finder.anagram_core import AnagramFinder
-from anagram_finder.dictionaries.ianagram_lang_dict import AnagramLangDictEnum
-
 import click
 import json
 import logging
-# import urllib
 import requests
 
 log = logging.getLogger(__name__)
@@ -42,17 +38,12 @@ class Cli(object):
             "Dictionary: %r, Filename: %r, Content: %r", dictionary, filename,
             f)
 
+        # FIXME: Use query form in request: "url?query_string", instead of:
+        # "url/query_string".
         path = "%s/anagrams/%s" % (self.base_path, dictionary)
         if dictionary is None:
             path = "%s/anagrams/%s" % (self.base_path, 'en-us-webster')
-
         log.debug(path)
-        # urllib library
-        # response = urllib.request.urlopen("%s/%s" % (path, f))
-        # content = response.read().decode('utf-8')
-
-        # FIXME: Use query form in request: "url?query_string", instead of:
-        # "url/query_string".
 
         # requests library.
         response = requests.get("%s/%s" % (path, f))
