@@ -46,7 +46,7 @@ class Cli(object):
         if dictionary is None:
             path = "%s/anagrams/%s" % (self.base_path, 'en-us-webster')
 
-        print(path)
+        log.debug(path)
         # urllib library
         # response = urllib.request.urlopen("%s/%s" % (path, f))
         # content = response.read().decode('utf-8')

@@ -57,4 +57,5 @@ def main():
 
 if __name__ == '__main__':
     # main()
+    # TODO: Need a mechanism to poll that this is up and ready to serve.
     app.run()
