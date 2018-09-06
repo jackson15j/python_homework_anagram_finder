@@ -27,7 +27,7 @@ def anagrams():
 
 
 @app.route('/anagrams/<path:dictionary>/<contents>')
-def anagrams_en_us_webster(dictionary, contents):
+def anagrams_dictionary(dictionary, contents):
     log.debug("XXX: ", dictionary, contents)
 
     anagram_dict_enum = None
