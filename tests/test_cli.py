@@ -62,13 +62,14 @@ def is_server_alive():
 
 
 @pytest.mark.usefixtures('anagramFinderProcess')
-class TestMain(object):
-    """Integration test for the `main.py` entrypoint."""
+class TestCli(object):
+    """Integration test for the `cli.py` Client entrypoint. The test spins up
+    the AnagramFinder process explicitly."""
 
     client_path = path.join(base_module_path, "client")
 
-    def test_main_missing_args(self):
-        """Verifies that `main.py` with no args returns usage."""
+    def test_cli_missing_args(self):
+        """Verifies that `cli.py` with no args returns usage."""
         cmd = subprocess.Popen(
             ["pipenv", "run", "python", "cli.py"],
             cwd=self.client_path,
@@ -79,7 +80,7 @@ class TestMain(object):
         assert b'Error: Missing argument "filename"' in cmd.stderr.read()
         assert 0 != cmd.wait()
 
-    def test_main_example_default_anagram_dict(
+    def test_cli_example_default_anagram_dict(
             self,
             anagram_examples_stdout_en_us_webster_dictionary):
         """Verifies expected stdout output of anagrams from each example file
@@ -96,7 +97,7 @@ class TestMain(object):
         assert b'' == cmd.stderr.read()
         assert 0 == cmd.wait()
 
-    def test_main_example_en_us_webster_anagram_dict(
+    def test_cli_example_en_us_webster_anagram_dict(
             self,
             anagram_examples_stdout_en_us_webster_dictionary):
         """Verifies expected stdout output of anagrams from each example file
@@ -114,7 +115,7 @@ class TestMain(object):
         assert b'' == cmd.stderr.read()
         assert 0 == cmd.wait()
 
-    def test_main_example_source_file_anagram_dict(
+    def test_cli_example_source_file_anagram_dict(
             self,
             anagram_examples_stdout_source_file_dictionary):
         """Verifies expected stdout output of anagrams from each example file
