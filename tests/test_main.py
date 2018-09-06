@@ -35,7 +35,7 @@ def anagram_examples_stdout_source_file_dictionary(request):
     return request.param
 
 
-@pytest.fixture()
+@pytest.fixture(scope='class')
 def anagramFinderProcess(request):
     """Spin up the AnagramFinder process."""
     cmd_backend = subprocess.Popen(
@@ -47,15 +47,16 @@ def anagramFinderProcess(request):
 
     yield
 
-    cmd_backend.kill()
+    cmd_backend.terminate()
 
 
+@pytest.mark.usefixtures('anagramFinderProcess')
 class TestMain(object):
     """Integration test for the `main.py` entrypoint."""
 
     client_path = path.join(base_module_path, "client")
 
-    def test_main_missing_args(self, anagramFinderProcess):
+    def test_main_missing_args(self):
         """Verifies that `main.py` with no args returns usage."""
         cmd = subprocess.Popen(
             ["pipenv", "run", "python", "cli.py"],
@@ -69,7 +70,6 @@ class TestMain(object):
 
     def test_main_example_default_anagram_dict(
             self,
-            anagramFinderProcess,
             anagram_examples_stdout_en_us_webster_dictionary):
         """Verifies expected stdout output of anagrams from each example file
         against the default anagram dictionary.
@@ -87,7 +87,6 @@ class TestMain(object):
 
     def test_main_example_en_us_webster_anagram_dict(
             self,
-            anagramFinderProcess,
             anagram_examples_stdout_en_us_webster_dictionary):
         """Verifies expected stdout output of anagrams from each example file
         against the EN US Webster anagram dictionary.
@@ -106,7 +105,6 @@ class TestMain(object):
 
     def test_main_example_source_file_anagram_dict(
             self,
-            anagramFinderProcess,
             anagram_examples_stdout_source_file_dictionary):
         """Verifies expected stdout output of anagrams from each example file
         against the source file as the anagram dictionary.
