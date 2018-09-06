@@ -6,6 +6,7 @@ from time import sleep
 import pytest
 import subprocess
 import logging
+import requests
 
 BaseLogging().default_config()
 log = logging.getLogger(__name__)
@@ -43,11 +44,21 @@ def anagramFinderProcess(request):
         cwd=base_module_path,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
-    sleep(5)
+    while not is_server_alive():
+        sleep(0.1)
 
     yield
 
     cmd_backend.terminate()
+
+
+def is_server_alive():
+    """Poll check to verify the backed AnagramFinder service is running."""
+    try:
+        response = requests.get("http://127.0.0.1:5000/")
+    except requests.ConnectionError:
+        return False
+    return response.status_code is 200
 
 
 @pytest.mark.usefixtures('anagramFinderProcess')
