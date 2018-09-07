@@ -3,6 +3,7 @@ from anagram_finder.dictionaries.ianagram_lang_dict import AnagramLangDictEnum
 from anagram_finder.utils.base_logging import BaseLogging
 
 from flask import Flask
+from time import sleep
 import json
 import logging
 
@@ -14,6 +15,19 @@ log = logging.getLogger(__name__)
 
 @app.route('/')
 def hello():
+    return 'Hello World'
+
+
+@app.route('/hello-async')
+def hello_async():
+    """TODO: Temp REST path whilst I learn asyncio/aiohttp. Aim is to make
+    the remaining paths asynchronous.
+    """
+    return _hello_delayed()
+
+
+def _hello_delayed():
+    sleep(1)
     return 'Hello World'
 
 

@@ -3,6 +3,9 @@ import anagram_finder
 
 from os import path
 from time import sleep
+from time import time
+import aiohttp
+import asyncio
 import json
 import pytest
 import subprocess
@@ -82,6 +85,47 @@ class TestMain(object):
 
         assert 200 == response.status_code
         assert exp == response.content.decode('utf-8')
+
+    def test_hello_async(self):
+        """Quick test to make multiple async requests and verify if the
+        responses are parallel or sequential. Aiming for parallel.
+        """
+
+        async def _async_tasks():
+            """Runs multiple async tasks and asserts on total time. Expectation
+            that time will be less than the sequential task time.
+            """
+            async with aiohttp.ClientSession() as session:
+                tasks = [
+                    self._async_verification_timer(session),
+                    self._async_verification_timer(session),
+                    self._async_verification_timer(session),
+                    self._async_verification_timer(session),
+                    self._async_verification_timer(session)
+                ]
+                timings = await asyncio.gather(*tasks)
+                timing_total = sum(timings)
+                print(timing_total)
+                assert timing_total < 2
+
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(_async_tasks())
+
+    async def _async_verification_timer(self, session):
+        """Simple aiohttp request and response verification.
+
+        @param aiohttp.ClientSession() session: Session to reqeusts with.
+        @returns float: Total request time.
+        """
+        exp = 'Hello World'
+        before = time()
+        async with session.get('%shello-async' % self.base_url) as response:
+            after = time()
+            assert 200 == response.status
+            assert exp in await response.text()
+        total = after - before
+        print(total)
+        return total
 
     def test_anagrams(self):
         exp1 = '/anagrams/en-us-webster'
