@@ -96,6 +96,7 @@ class TestMain(object):
             that time will be less than the sequential task time.
             """
             async with aiohttp.ClientSession() as session:
+                before_tasks = time()
                 tasks = [
                     self._async_verification_timer(session),
                     self._async_verification_timer(session),
@@ -105,8 +106,13 @@ class TestMain(object):
                 ]
                 timings = await asyncio.gather(*tasks)
                 timing_total = sum(timings)
+                timing_total_tasks = time() - before_tasks
                 print(timing_total)
-                assert timing_total < 2
+                log.debug(timing_total)
+                # assert timing_total < 2
+                print(timing_total_tasks)
+                log.debug(timing_total_tasks)
+                assert timing_total_tasks < 2
 
         loop = asyncio.get_event_loop()
         loop.run_until_complete(_async_tasks())
@@ -124,7 +130,7 @@ class TestMain(object):
             assert 200 == response.status
             assert exp in await response.text()
         total = after - before
-        print(total)
+        log.debug(total, session)
         return total
 
     def test_anagrams(self):
