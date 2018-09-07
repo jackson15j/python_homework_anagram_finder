@@ -12,6 +12,7 @@ asyncio = "*"
 flask = "*"
 requests = "*"
 aiohttp = "*"
+tornado = "*"
 
 [dev-packages]
 "flake8" = "*"
