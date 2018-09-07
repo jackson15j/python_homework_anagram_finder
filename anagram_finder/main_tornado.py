@@ -9,7 +9,7 @@ import tornado.gen
 import tornado.ioloop
 import tornado.web
 
-log = logging.getLogger(__name__)
+log = logging.getLogger("main_tornado")
 
 
 class HelloHandler(tornado.web.RequestHandler):

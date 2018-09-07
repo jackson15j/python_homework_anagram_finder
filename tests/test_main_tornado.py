@@ -14,10 +14,10 @@ base_module_path = path.dirname(anagram_finder.__file__)
 
 
 @pytest.fixture(scope='class')
-def anagramFinderProcess(request):
+def anagramFinderProcessTornado(request):
     """Spin up the AnagramFinder process."""
     cmd_backend = subprocess.Popen(
-        ["pipenv", "run", "python", "main.py"],
+        ["pipenv", "run", "python", "main_tornado.py"],
         cwd=base_module_path,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
@@ -29,6 +29,6 @@ def anagramFinderProcess(request):
     cmd_backend.terminate()
 
 
-@pytest.mark.usefixtures('anagramFinderProcess')
-class TestMain(BaseMain):
+@pytest.mark.usefixtures('anagramFinderProcessTornado')
+class TestMainTornado(BaseMain):
     pass
