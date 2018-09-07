@@ -11,6 +11,7 @@ anagram-finder = {editable = true, path = "."}
 asyncio = "*"
 flask = "*"
 requests = "*"
+aiohttp = "*"
 
 [dev-packages]
 "flake8" = "*"
