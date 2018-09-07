@@ -5,6 +5,7 @@ from anagram_finder.utils.base_logging import BaseLogging
 from time import sleep
 import json
 import logging
+import tornado.gen
 import tornado.ioloop
 import tornado.web
 
@@ -21,14 +22,20 @@ class AsyncHelloHandler(tornado.web.RequestHandler):
     remaining paths asynchronous.
     """
     async def get(self):
-        # await a synchronous function.
-        # http://www.tornadoweb.org/en/stable/faq.html#why-isn-t-this-example-with-time-sleep-running-in-parallel
-        ret_val = await tornado.ioloop.IOLoop.current().run_in_executor(
-            None, self._hello_delayed)
+        # # await a synchronous function.
+        # # http://www.tornadoweb.org/en/stable/faq.html#why-isn-t-this-example-with-time-sleep-running-in-parallel
+        # ret_val = await tornado.ioloop.IOLoop.current().run_in_executor(
+        #     None, self._hello_delayed)
+        # self.write(ret_val)
+        ret_val = await self._async_hello_delayed()
         self.write(ret_val)
 
     def _hello_delayed(self):
         sleep(1)
+        return 'Hello World'
+
+    async def _async_hello_delayed(self):
+        await tornado.gen.sleep(1)
         return 'Hello World'
 
 
