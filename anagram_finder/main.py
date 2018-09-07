@@ -41,7 +41,7 @@ def anagrams():
 
 @app.route('/anagrams/<path:dictionary>/<contents>')
 def anagrams_dictionary(dictionary, contents):
-    log.debug("XXX: ", dictionary, contents)
+    log.debug("XXX: dictionary: %r, contents: %r", dictionary, contents)
 
     anagram_dict_enum = None
     if dictionary == 'en-us-webster':
