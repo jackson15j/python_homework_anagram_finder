@@ -1,4 +1,3 @@
-from anagram_finder.client import cli
 from anagram_finder.anagram_core import AnagramFinder
 from anagram_finder.dictionaries.ianagram_lang_dict import AnagramLangDictEnum
 from anagram_finder.utils.base_logging import BaseLogging
@@ -47,15 +46,13 @@ def anagrams_dictionary(dictionary, contents):
 
 
 def main():
-    """Main entrypoint for the Anagram Finder application. Uses the CLI client.
+    """Main entrypoint for the Anagram Finder Server process.
     """
     BaseLogging().default_config()
-    log.debug("Calling Anagram finder from CLI instance...")
-    cli.input()
-    log.debug("Application exit.")
+    log.debug("Starting Anagram finder Server process...")
+    app.run()
+    log.debug("Stopping Anagram finder Server process...")
 
 
 if __name__ == '__main__':
-    # main()
-    # TODO: Need a mechanism to poll that this is up and ready to serve.
-    app.run()
+    main()
