@@ -6,41 +6,12 @@ from time import time
 import aiohttp
 import asyncio
 import json
-import pytest
 import logging
 import requests
 
 BaseLogging().default_config()
 log = logging.getLogger(__name__)
 base_module_path = path.dirname(anagram_finder.__file__)
-
-
-# FIXME: Duplicated from test_anagram_finder.py.
-@pytest.fixture(params=[
-    # source_str, exp_result.
-    ("the quick brown fox", [("no anagrams found", )]),
-    ("eat my tea", [("eat", "tea")]),
-    ("do or door no no", [("no anagrams found", )]),
-    ("pots stop pots spot stop", [("pots", "spot", "stop")]),
-    ("on pots no stop eat\nate pots spot stop tea",
-     [("no", "on"), ("pots", "spot", "stop"), ("ate", "eat", "tea")])
-])
-def anagram_examples_source_file_dictionary(request):
-    return request.param
-
-
-# FIXME: Duplicated from test_anagram_finder.py.
-@pytest.fixture(params=[
-    # source_str, exp_result.
-    ("the quick brown fox", [("no anagrams found",)]),
-    ("eat my tea", [("ate", "eat", "tea")]),
-    ("do or door no no", [("do", "od"), ("door", "odor"), ("no", "on")]),
-    ("pots stop pots spot stop", [("post", "pots", "spot", "stop")]),
-    ("on pots no stop eat\nate pots spot stop tea",
-     [("no", "on"), ("post", "pots", "spot", "stop"), ("ate", "eat", "tea")])
-])
-def anagram_examples_en_us_webster_dictionary(request):
-    return request.param
 
 
 # TODO: move to a central place.

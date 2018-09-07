@@ -1,8 +1,5 @@
 from base_main import is_server_alive
 from base_main import BaseMain
-# Unused imports due to bad fixture levels.
-from base_main import anagram_examples_source_file_dictionary
-from base_main import anagram_examples_en_us_webster_dictionary
 import anagram_finder
 
 from os import path
